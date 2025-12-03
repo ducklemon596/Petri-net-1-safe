@@ -150,6 +150,29 @@ Trích xuất công thức logic từ một node BDD.
 
 ---
 
+### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
+
+Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt dựa trên hệ thống trọng số tùy chỉnh.
+
+**Chức năng:** 
+
+* Duyệt qua các nghiệm (markings) chứa trong `reachable_bdd` bằng phương thức `pick_iter`.
+* Tính toán điểm số (score) cho từng trạng thái theo công thức tổng quát: `score = Σ (has_token × weight)`.
+* So sánh và lưu giữ trạng thái có **tổng điểm cao nhất**.
+
+**Tham số:**
+
+* `reachable_bdd`: Đối tượng BDD biểu diễn tập hợp các trạng thái khả đạt cần tìm kiếm.
+* `weights` (dictionary, tùy chọn): Bảng trọng số cho từng Place (ví dụ: `{'p1': 10, 'p2': -5}`). Mặc định là 1 cho tất cả Places nếu để `None`
+
+**Trả về:** tuple gồm:
+
+* `best_marking` (dict): Cấu hình trạng thái đạt điểm cao nhất (hoặc None nếu không tìm thấy).
+* `max_score` (float/int): Điểm số tối ưu tương ứng.
+* `duration` (float): Thời gian thực thi quá trình tìm kiếm.
+
+---
+
 ## License
 
 Dự án được sử dụng cho mục đích học tập và nghiên cứu.
