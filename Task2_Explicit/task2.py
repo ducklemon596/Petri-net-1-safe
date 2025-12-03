@@ -8,7 +8,7 @@ class ExplicitTraverse:
     def __init__(self, petri_net: PetriNet):
         self.petri_net = petri_net
 
-    def compute_reachable_markings(self, method="bfs", timeout=10.0):
+    def compute_reachable_markings(self, method="bfs", timeout=30.0):
         try:
             start_time = time.time()
 
@@ -29,18 +29,23 @@ class ExplicitTraverse:
                 if method.lower() == "bfs":
                     m = dq.popleft()  # BFS: FIFO
                 else:
-                    m = dq.pop()      # DFS: LIFO
+                    m = dq.pop()  # DFS: LIFO
 
                 # Find all enabled transitions: M >= Pre(:, t)
-                enabled_t = [t for t in range(self.petri_net.num_transitions)
-                             if np.all(m >= self.petri_net.pre_matrix[:, t])]
+                enabled_t = [
+                    t
+                    for t in range(self.petri_net.num_transitions)
+                    if np.all(m >= self.petri_net.pre_matrix[:, t])
+                ]
 
                 # Fire each enabled transition
                 for t in enabled_t:
                     # Calculate new marking: M_new = M - Pre + Post
-                    m_new = m - \
-                        self.petri_net.pre_matrix[:, t] + \
-                        self.petri_net.post_matrix[:, t]
+                    m_new = (
+                        m
+                        - self.petri_net.pre_matrix[:, t]
+                        + self.petri_net.post_matrix[:, t]
+                    )
                     m_new_tuple = tuple(m_new)
 
                     # If marking not visited, add to queue
@@ -73,8 +78,10 @@ class ExplicitTraverse:
 
         for state in states:
             # state is a numpy array; convert to dict {place_id: token}
-            marking = {self.petri_net.places[i]: int(
-                state[i]) for i in range(self.petri_net.num_places)}
+            marking = {
+                self.petri_net.places[i]: int(state[i])
+                for i in range(self.petri_net.num_places)
+            }
             print(marking)
 
         print("-" * 40)
