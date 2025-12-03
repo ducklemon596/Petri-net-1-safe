@@ -280,20 +280,20 @@ Khởi tạo bộ phát hiện deadlock.
 
 **Tham số:**
 
-`petri_net`: Đối tượng chứa cấu trúc mạng Petri. 
-`bdd_reach`: BDD_Reachability đã tính trước.
-`reachable_marking_nums`: Số marking reachable.
-`marking_limit`, `place_limit`, `transition_limit`: giới hạn cấu trúc mạng Petri nhỏ.
+* `petri_net`: Đối tượng chứa cấu trúc mạng Petri. 
+* `bdd_reach`: BDD_Reachability đã tính trước.
+* `reachable_marking_nums`: Số marking reachable.
+* `marking_limit`, `place_limit`, `transition_limit`: giới hạn cấu trúc mạng Petri nhỏ.
 
 ---
 
 #### `_state_to_marking(self, state)`
 
-Chuyển nghiệm trạng thái BDD (`pick` hoặc `pick_iter`) sang dạng marking ({place: 0/1}).
+Chuyển nghiệm trạng thái BDD (`pick` hoặc `pick_iter`) sang dạng marking.
 
 **Chức năng:**
 
-* Nhận một state BDD (ví dụ như `{'x_p1': 1, 'x_p2': 0, 'x_p3': 1}`).
+* Nhận một state BDD: ví dụ `{'x_p1': 1, 'x_p2': 0, 'x_p3': 1}`.
 * Chuyển thành dictionary `{place: token}`: ví dụ `{'p1': 1, 'p2': 0, 'p3': 1}`.
 
 **Tham số:**
@@ -313,7 +313,8 @@ Kiểm tra một marking có phải deadlock hay không bằng cách giải mô 
 **Chức năng:**
 
 * Tính toán điều kiện kích hoạt cho từng transition.
-* Giải mô hình ILP để xác định tổng số transition enabled: enabled_total = $\text{enabled\_total} = \sum_{t \in T} \text{enabled}_t$
+* Giải mô hình ILP để xác định tổng số transition enabled: `enabled_total = \sum_{t \in T} enabled_t`
+
 * Xác định marking là deadlock nếu enable_total = 0.
 
 **Tham số:**
@@ -321,6 +322,8 @@ Kiểm tra một marking có phải deadlock hay không bằng cách giải mô 
 `marking` (dict): marking cần kiểm tra deadlock.
 
 **Trả về:** `True` nếu marking là deadlock, ngược lại `False`.
+
+---
 
 #### `_build_dead_bdd(self)`
 
@@ -337,6 +340,8 @@ Xây dựng BDD biểu diễn tất cả marking deadlock.
 
 **Trả về:**  
 `dead_bdd`: BDD object đại diện cho tập marking deadlock.
+
+---
 
 #### `find_deadlock(self, states_bdd)`
 
@@ -359,9 +364,13 @@ Tìm một marking deadlock trong tập reachable.
 * `marking_deadlock` (dict/None): marking deadlock tìm được (hoặc None nếu không tìm thấy).
 * `duration` (float): thời gian thực thi quá trình tìm Deadlock (giây).
 
+---
+
 #### print_deadlock(self, deadlock)
 
 In ra deadlock nếu tìm thấy.
+
+---
 
 ## License
 
