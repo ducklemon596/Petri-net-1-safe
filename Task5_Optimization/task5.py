@@ -36,7 +36,7 @@ class Optimization:
         # Build final weights dictionary
         final_weights = {}
         for p in self.petri_net.places:
-            final_weights[p] = weights.get(p, 0)
+            final_weights[p] = weights.get(p, 1)
 
         max_score = -float("inf")
         best_marking = None
@@ -96,7 +96,7 @@ class Optimization:
 
         final_weights = {}
         for p in self.petri_net.places:
-            final_weights[p] = weights.get(p, 0)
+            final_weights[p] = weights.get(p, 1)
 
         max_score = -float("inf")
         best_marking = None

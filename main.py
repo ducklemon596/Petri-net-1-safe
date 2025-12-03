@@ -1,3 +1,6 @@
+import argparse
+import os
+import sys
 from Task1_Parser.task1 import PetriNet
 from Task2_Explicit.task2 import ExplicitTraverse
 from Task3_BDD.task3 import BDD_Reachability
@@ -5,16 +8,28 @@ from Task4_Deadlock.task4 import ILP_BDD_Deadlock_Detection
 from Task5_Optimization.task5 import Optimization
 
 
-def main():
+def main(pnml_file=None):
+    if pnml_file is None:
+        pnml_file = "Test_PNML_Files/config1.pnml"
+    else:
+        # If the user passed only a filename (e.g. "config1.pnml"), try the
+        # project `Test_PNML_Files/` directory when the path doesn't exist.
+        if not os.path.isabs(pnml_file) and not os.path.exists(pnml_file):
+            candidate = os.path.join("Test_PNML_Files", pnml_file)
+            if os.path.exists(candidate):
+                pnml_file = candidate
+            else:
+                print(f"PNML file not found: {pnml_file}")
+                print(f"Tried: {pnml_file} and {candidate}")
+                sys.exit(1)
+
+    # =====================================================================
     print("=" * 60)
     print("PETRI NET ANALYSIS - MAIN TEST")
     print("=" * 60)
 
-    # Test configuration
-    pnml_file = "Test_PNML_Files/config1.pnml"
-
     # =====================================================================
-    # TASK 1: PARSER - Read PNML file
+    # TASK 1: PARSER
     # =====================================================================
     print("\n[TASK 1] PARSER - Reading PNML file")
     print("-" * 60)
@@ -51,9 +66,6 @@ def main():
 
     print(f"Total reachable states (BDD): {total_states}")
     print(f"Execution time: {elapsed_time:.6f} seconds")
-    print(f"Get Boolean expression from BDD:")
-    expr = bdd_reach.get_expr_from_bdd(states_bdd)
-    print(expr)
 
     # =====================================================================
     # TASK 4: DEADLOCK DETECTION
@@ -83,11 +95,7 @@ def main():
 
     # Pass the BDD reachability object so optimizer reuses same BDD manager
     optimizer = Optimization(petri_net, bdd_reach=bdd_reach)
-
-    weights = {p: 1 for p in petri_net.places}
-    best_marking, score, opt_time = optimizer.optimize_reachable_marking(
-        states_bdd, weights
-    )
+    best_marking, score, opt_time = optimizer.optimize_reachable_marking(states_bdd)
 
     print(f"Best marking: {best_marking}")
     print(f"Optimal score: {score}")
@@ -99,4 +107,14 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="Run Petri net analysis on a PNML file (default: Test_PNML_Files/config2.pnml)"
+    )
+    parser.add_argument(
+        "pnml_file",
+        nargs="?",
+        default=None,
+        help="Path to PNML file to analyze (optional)",
+    )
+    args = parser.parse_args()
+    main(args.pnml_file)

@@ -37,7 +37,7 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
 ### **Task 4: Phát hiện deadlock**
 
-* Phát hiện trạng thái bế tắc bằng ILP kết hợp với BDD.
+* Phát hiện trạng thái deadlock bằng ILP kết hợp với BDD.
 
 ### **Task 5: Tối ưu hóa**
 
@@ -54,8 +54,9 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 2. **Chạy chương trình kiểm thử chính:**
 
    ```powershell
-   python main.py
+   python main.py <pnml_file>
    ```
+    Trong đó `<pnml_file>` là đường dẫn tới file PNML bạn muốn phân tích. Nếu không cung cấp, chương trình sẽ sử dụng file ví dụ `Test_PNML_Files/config1.pnml`.
 
    Lệnh này sẽ phân tích file PNML ví dụ, chạy tất cả các tác vụ phân tích và in kết quả ra console.
 
