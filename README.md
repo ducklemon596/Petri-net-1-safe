@@ -152,13 +152,14 @@ Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn
 **Đầu ra ví dụ:**
 
 ```text
-Total states found: 5
-Execution time: 0.001200 seconds
+Total states found: 3
+Execution time: 0.000000 seconds
 ----------------------------------------
 Reachable marking states
 ----------------------------------------
 [1, 0, 0]
 [0, 1, 0]
+[0, 0, 1]
 ```
 
 ### Class `BDD_Reachability`
