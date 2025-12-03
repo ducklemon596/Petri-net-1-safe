@@ -51,7 +51,7 @@ def main(pnml_file=None):
     print("-" * 60)
 
     explicit = ExplicitTraverse(petri_net)
-    explicit.print_reachable_markings(method="bfs", timeout=10.0)
+    explicit.print_reachable_markings(method="bfs")
 
     # =====================================================================
     # TASK 3: BDD REACHABILITY
