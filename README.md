@@ -159,7 +159,7 @@ Reachable marking states
 ----------------------------------------
 [1, 0, 0]
 [0, 1, 0]
-...
+```
 
 ### Class `BDD_Reachability`
 
