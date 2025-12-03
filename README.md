@@ -313,9 +313,8 @@ Kiểm tra một marking có phải deadlock hay không bằng cách giải mô 
 **Chức năng:**
 
 * Tính toán điều kiện kích hoạt cho từng transition.
-* Giải mô hình ILP để xác định tổng số transition enabled: `enabled_total = \sum_{t \in T} enabled_t`
-
-* Xác định marking là deadlock nếu enable_total = 0.
+* Giải mô hình ILP để xác định tổng số transition enabled: `enabled_total = Σ_{t ∈ T}(enabled_t)`
+* Xác định marking là deadlock nếu enabled_total = 0.
 
 **Tham số:**
 
