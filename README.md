@@ -149,6 +149,10 @@ Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn
 * Hiển thị tổng số trạng thái và thời gian thực thi.
 * Liệt kê chi tiết từng vector trạng thái tìm được.
 
+**Tham số:**
+
+* `method` (str): Phương pháp duyệt, `"bfs"` hoặc `"dfs"`. Mặc định là `"bfs"`.
+
 **Đầu ra ví dụ:**
 
 ```text
@@ -161,6 +165,22 @@ Reachable marking states
 [0, 1, 0]
 [0, 0, 1]
 ```
+---
+#### `read_weight(self, weight_file_path)`
+
+Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn hình console theo định dạng dễ đọc.
+
+**Chức năng:**
+
+* Đọc file text chứa các số nguyên (cách nhau bởi khoảng trắng hoặc xuống dòng).
+* Chuyển đổi dữ liệu thành mảng NumPy (`self.c`).
+* Kiểm tra tính hợp lệ: Số lượng trọng số trong file phải khớp với số lượng Place trong mạng (`self.num_places`).
+
+**Tham số:**
+
+* `weight_file_path`: Đường dẫn đến file chứa trọng số.
+
+---
 
 ### Class `BDD_Reachability`
 
