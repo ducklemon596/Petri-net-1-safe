@@ -1,11 +1,44 @@
 import argparse
 import os
 import sys
+import logging
+from datetime import datetime
 from Task1_Parser.task1 import PetriNet
 from Task2_Explicit.task2 import ExplicitTraverse
 from Task3_BDD.task3 import BDD_Reachability
 from Task4_Deadlock.task4 import ILP_BDD_Deadlock_Detection
 from Task5_Optimization.task5 import Optimization
+
+
+class DualOutput:
+    """Write to both console and file simultaneously"""
+
+    def __init__(self, file_handle, console):
+        self.file = file_handle
+        self.console = console
+
+    def write(self, message):
+        self.console.write(message)
+        self.file.write(message)
+        self.file.flush()
+
+    def flush(self):
+        self.console.flush()
+        self.file.flush()
+
+
+def setup_logging(pnml_file):
+    """Setup logging to file and console"""
+    # Create logs directory if it doesn't exist
+    if not os.path.exists("logs"):
+        os.makedirs("logs")
+
+    # Generate log filename with timestamp and PNML name
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    pnml_basename = os.path.splitext(os.path.basename(pnml_file))[0]
+    log_filename = f"logs/{pnml_basename}_{timestamp}.log"
+
+    return log_filename
 
 
 def main(pnml_file=None):
@@ -23,10 +56,17 @@ def main(pnml_file=None):
                 print(f"Tried: {pnml_file} and {candidate}")
                 sys.exit(1)
 
+    # Setup logging to file
+    log_filename = setup_logging(pnml_file)
+    log_file = open(log_filename, "w", encoding="utf-8")
+    original_stdout = sys.stdout
+    sys.stdout = DualOutput(log_file, original_stdout)
+
     # =====================================================================
     print("=" * 60)
     print("PETRI NET ANALYSIS - MAIN TEST")
     print("=" * 60)
+    print(f"Log file: {log_filename}")
 
     # =====================================================================
     # TASK 1: PARSER
@@ -51,7 +91,7 @@ def main(pnml_file=None):
     print("-" * 60)
 
     explicit = ExplicitTraverse(petri_net)
-    explicit.print_reachable_markings(method="bfs", timeout=10.0)
+    explicit.print_reachable_markings(method="bfs", timeout=30.0)
 
     # =====================================================================
     # TASK 3: BDD REACHABILITY
@@ -104,6 +144,11 @@ def main(pnml_file=None):
     print("\n" + "=" * 60)
     print("TEST COMPLETED")
     print("=" * 60)
+
+    # Close log file and restore stdout
+    log_file.close()
+    sys.stdout = original_stdout
+    print(f"\n✓ Log saved to: {log_filename}")
 
 
 if __name__ == "__main__":
