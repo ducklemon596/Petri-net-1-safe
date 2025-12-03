@@ -80,6 +80,87 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
 ## API Reference 
 
+### Class `PetriNet`
+
+Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận và thực hiện tính toán các trạng thái khả đạt (reachable markings) bằng phương pháp duyệt đồ thị tường minh (Explicit State Space Exploration).
+
+#### `__init__(self, pnml_file_path)`
+
+**Chức năng:**
+
+* Khởi tạo đối tượng mạng Petri.
+* Thiết lập các cấu trúc dữ liệu rỗng (Places, Transitions, Ma trận liên thuộc).
+* Tự động gọi phương thức `read_pnml_file` để nạp dữ liệu từ đường dẫn được cung cấp.
+
+**Tham số:**
+
+* `pnml_file_path`: Đường dẫn đến file `.pnml` chứa cấu trúc mạng Petri.
+
+---
+
+#### `read_pnml_file(self, file_path: str)`
+
+Phân tích cú pháp file XML (định dạng PNML) để xây dựng mô hình toán học của mạng.
+
+**Chức năng:**
+
+* Sử dụng thư viện `xml.etree.ElementTree` để duyệt cây XML.
+* Trích xuất danh sách **Places** và **Initial Marking** (trạng thái ban đầu).
+* Trích xuất danh sách **Transitions**.
+* Xây dựng hai ma trận trọng số cơ bản:
+  * `self.pre_matrix`: Ma trận đầu vào (Place $\to$ Transition).
+  * `self.post_matrix`: Ma trận đầu ra (Transition $\to$ Place).
+
+**Tham số:**
+
+* `file_path`: Đường dẫn tuyệt đối hoặc tương đối đến file `.pnml`.
+
+---
+
+#### `explicit_reachable_markings_computation(self, method="bfs")`
+
+Thực hiện thuật toán duyệt đồ thị để tìm kiếm toàn bộ không gian trạng thái khả đạt từ trạng thái ban đầu ($M_0$).
+
+**Chức năng:**
+
+* Hỗ trợ hai chiến lược duyệt: **BFS** (Breadth-First Search) và **DFS** (Depth-First Search).
+* Kiểm tra điều kiện kích hoạt (enable) của transition: $M \ge Pre$.
+* Tính toán trạng thái mới theo công thức: $M_{new} = M - Pre + Post$.
+* **Cơ chế Timeout:** Tự động dừng và trả về lỗi nếu thời gian thực thi vượt quá 10 giây.
+
+**Tham số:**
+
+* `method` (str): Phương pháp duyệt, chấp nhận `"bfs"` hoặc `"dfs"`. Mặc định là `"bfs"`.
+
+**Trả về:** tuple gồm:
+
+* `marking_states` (list): Danh sách các vector trạng thái (markings) tìm thấy. (Trả về `-1` nếu timeout).
+* `elapsed_time` (float): Thời gian thực thi thuật toán tính bằng giây.
+
+---
+
+#### `print_reachable_markings(self, method="bfs")`
+
+Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn hình console theo định dạng dễ đọc.
+
+**Chức năng:**
+
+* Gọi hàm `explicit_reachable_markings_computation`.
+* Hiển thị tổng số trạng thái và thời gian thực thi.
+* Liệt kê chi tiết từng vector trạng thái tìm được.
+
+**Đầu ra ví dụ:**
+
+```text
+Total states found: 5
+Execution time: 0.001200 seconds
+----------------------------------------
+Reachable marking states
+----------------------------------------
+[1, 0, 0]
+[0, 1, 0]
+...
+
 ### Class `BDD_Reachability`
 
 Class này cung cấp các phương thức để xây dựng và phân tích không gian trạng thái của mạng Petri sử dụng cấu trúc dữ liệu **Binary Decision Diagrams (BDD)**.
