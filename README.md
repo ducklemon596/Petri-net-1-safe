@@ -255,6 +255,114 @@ Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt
 
 ---
 
+### Class `ILP_BDD_Deadlock_Detection`
+
+Class này triển khai thuật toán phát hiện deadlock bằng cách **kết hợp ILP và BDD**.  
+Ý tưởng chính:
+
+* Với mạng nhỏ → kiểm tra toàn bộ reachable bằng ILP (tuyệt đối chính xác).
+* Với mạng vừa/lớn → dùng BDD để tìm ra các marking deadlock, sau đó xác minh lại bằng ILP để đảm bảo đúng.
+
+---
+
+#### `__init__(...)`
+
+Khởi tạo bộ phát hiện deadlock.
+
+**Chức năng:**
+
+* Liên kết thông tin từ PetriNet và BDD vào ILP framework.
+* Tạo input places / output places cho từng transition từ `pre_matrix` và `post_matrix`.
+* Xây dựng mô hình ILP gồm:
+  * Biến nhị phân `e_t` cho mỗi transition (transition t có enabled hay không).
+  * Một constraint tương ứng cho mỗi transition.
+* Khởi tạo giới hạn cấu trúc mạng Petri để lựa chọn cách tìm deadlock.
+
+**Tham số:**
+
+`petri_net`: Đối tượng chứa cấu trúc mạng Petri. 
+`bdd_reach`: BDD_Reachability đã tính trước.
+`reachable_marking_nums`: Số marking reachable.
+`marking_limit`, `place_limit`, `transition_limit`: giới hạn cấu trúc mạng Petri nhỏ.
+
+---
+
+#### `_state_to_marking(self, state)`
+
+Chuyển nghiệm trạng thái BDD (`pick` hoặc `pick_iter`) sang dạng marking ({place: 0/1}).
+
+**Chức năng:**
+
+* Nhận một state BDD (ví dụ như `{'x_p1': 1, 'x_p2': 0, 'x_p3': 1}`).
+* Chuyển thành dictionary `{place: token}`: ví dụ `{'p1': 1, 'p2': 0, 'p3': 1}`.
+
+**Tham số:**
+
+* `state`: dictionary BDD node từ `pick` hoặc `pick_iter`.
+
+**Trả về:**  
+
+* `marking` (dict): mapping {place_name: 0/1}.
+
+---
+
+#### `_is_deadlock_ilp(self, marking)`
+
+Kiểm tra một marking có phải deadlock hay không bằng cách giải mô hình ILP.
+
+**Chức năng:**
+
+* Tính toán điều kiện kích hoạt cho từng transition.
+* Giải mô hình ILP để xác định tổng số transition enabled: enabled_total = $\text{enabled\_total} = \sum_{t \in T} \text{enabled}_t$
+* Xác định marking là deadlock nếu enable_total = 0.
+
+**Tham số:**
+
+`marking` (dict): marking cần kiểm tra deadlock.
+
+**Trả về:** `True` nếu marking là deadlock, ngược lại `False`.
+
+#### `_build_dead_bdd(self)`
+
+Xây dựng BDD biểu diễn tất cả marking deadlock.
+
+**Chức năng:**
+
+* Với mỗi transition:
+  * Nếu không có input → transition luôn enabled: `t_enabled = True`.
+  * Nếu có input → transition enabled khi tất cả input places có token: `t_enabled = x_p1 & x_p2 & ...`.
+* Kết hợp OR tất cả transitions để tạo BDD biểu diễn bất kỳ transition nào được enabled: `enabled_any = t1_enabled | t2_enabled | ... | tn_enabled`.
+* Phủ định BDD `enabled_any` để thu được tập marking deadlock:
+  `dead_bdd = ~enabled_any`.
+
+**Trả về:**  
+`dead_bdd`: BDD object đại diện cho tập marking deadlock.
+
+#### `find_deadlock(self, states_bdd)`
+
+Tìm một marking deadlock trong tập reachable.
+
+**Chức năng:**
+
+* Mạng nhỏ: Duyệt toàn bộ reachable marking bằng BDD, kiểm tra từng marking với ILP.
+* Mạng vừa/lớn:
+  * Xây dựng dead_bdd từ `_build_dead_bdd()`.
+  * Lọc candidate: `candidate_bdd = states_bdd & dead_bdd`.
+  * Chọn một hoặc vài marking từ BDD candidate để xác minh lại bằng ILP (tối đa 100 nghiệm nếu cần).
+
+**Tham số:**
+
+* `states_bdd`: BDD biểu diễn tập reachable states.
+
+**Trả về:** tuple gồm:
+
+* `marking_deadlock` (dict/None): marking deadlock tìm được (hoặc None nếu không tìm thấy).
+* `duration` (float): thời gian thực thi quá trình tìm Deadlock (giây).
+
+#### print_deadlock(self, deadlock)
+
+In ra deadlock nếu tìm thấy.
+
 ## License
 
 Dự án được sử dụng cho mục đích học tập và nghiên cứu.
