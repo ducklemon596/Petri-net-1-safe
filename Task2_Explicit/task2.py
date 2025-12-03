@@ -8,7 +8,7 @@ class ExplicitTraverse:
     def __init__(self, petri_net: PetriNet):
         self.petri_net = petri_net
 
-    def compute_reachable_markings(self, method="bfs"):
+    def compute_reachable_markings(self, method="bfs", timeout=20.0):
         try:
             start_time = time.time()
 
@@ -21,6 +21,9 @@ class ExplicitTraverse:
             marking_states = [self.petri_net.initial_marking]
 
             while dq:
+                # Check timeout
+                if time.time() - start_time > timeout:
+                    return -1, time.time() - start_time
 
                 # Select dequeue method based on traversal type
                 if method.lower() == "bfs":
@@ -53,8 +56,12 @@ class ExplicitTraverse:
             print(f"[Error] {e}")
             return [], 0
 
-    def print_reachable_markings(self, method="bfs"):
-        states, elapsed_time = self.compute_reachable_markings(method)
+    def print_reachable_markings(self, method="bfs", timeout=20.0):
+        states, elapsed_time = self.compute_reachable_markings(method, timeout)
+
+        if states == -1:
+            print(f"Time out (exceeded {timeout} seconds)")
+            return
 
         print(f"Total states found: {len(states)}")
         print(f"Execution time: {elapsed_time:.6f} seconds")
