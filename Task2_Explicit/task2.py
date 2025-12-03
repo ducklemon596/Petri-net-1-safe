@@ -8,7 +8,7 @@ class ExplicitTraverse:
     def __init__(self, petri_net: PetriNet):
         self.petri_net = petri_net
 
-    def compute_reachable_markings(self, method="bfs", timeout=30.0):
+    def compute_reachable_markings(self, method="bfs", timeout=20.0):
         try:
             start_time = time.time()
 
@@ -61,7 +61,7 @@ class ExplicitTraverse:
             print(f"[Error] {e}")
             return [], 0
 
-    def print_reachable_markings(self, method="bfs", timeout=10.0):
+    def print_reachable_markings(self, method="bfs", timeout=20.0):
         states, elapsed_time = self.compute_reachable_markings(method, timeout)
 
         if states == -1:
