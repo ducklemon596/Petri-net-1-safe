@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="ring_net" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <name>
+      <text>1-Safe Token Ring (N=20, K=5)</text>
+    </name>
+    <page id="page1">
+
+      <place id="p_0">
+        <name><text>Node_0</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="0" y="50"/></graphics>
+      </place>
+      
+      <place id="free_0">
+        <name><text>Free_0</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="0" y="150"/></graphics>
+      </place>
+      
+      <place id="p_1">
+        <name><text>Node_1</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="50" y="50"/></graphics>
+      </place>
+      
+      <place id="free_1">
+        <name><text>Free_1</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="50" y="150"/></graphics>
+      </place>
+      
+      <place id="p_2">
+        <name><text>Node_2</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="100" y="50"/></graphics>
+      </place>
+      
+      <place id="free_2">
+        <name><text>Free_2</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="100" y="150"/></graphics>
+      </place>
+      
+      <place id="p_3">
+        <name><text>Node_3</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="150" y="50"/></graphics>
+      </place>
+      
+      <place id="free_3">
+        <name><text>Free_3</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="150" y="150"/></graphics>
+      </place>
+      
+      <place id="p_4">
+        <name><text>Node_4</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="200" y="50"/></graphics>
+      </place>
+      
+      <place id="free_4">
+        <name><text>Free_4</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="200" y="150"/></graphics>
+      </place>
+      
+      <place id="p_5">
+        <name><text>Node_5</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="250" y="50"/></graphics>
+      </place>
+      
+      <place id="free_5">
+        <name><text>Free_5</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="250" y="150"/></graphics>
+      </place>
+      
+      <place id="p_6">
+        <name><text>Node_6</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="300" y="50"/></graphics>
+      </place>
+      
+      <place id="free_6">
+        <name><text>Free_6</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="300" y="150"/></graphics>
+      </place>
+      
+      <place id="p_7">
+        <name><text>Node_7</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="350" y="50"/></graphics>
+      </place>
+      
+      <place id="free_7">
+        <name><text>Free_7</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="350" y="150"/></graphics>
+      </place>
+      
+      <place id="p_8">
+        <name><text>Node_8</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="400" y="50"/></graphics>
+      </place>
+      
+      <place id="free_8">
+        <name><text>Free_8</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="400" y="150"/></graphics>
+      </place>
+      
+      <place id="p_9">
+        <name><text>Node_9</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="450" y="50"/></graphics>
+      </place>
+      
+      <place id="free_9">
+        <name><text>Free_9</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="450" y="150"/></graphics>
+      </place>
+      
+      <place id="p_10">
+        <name><text>Node_10</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="500" y="50"/></graphics>
+      </place>
+      
+      <place id="free_10">
+        <name><text>Free_10</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="500" y="150"/></graphics>
+      </place>
+      
+      <place id="p_11">
+        <name><text>Node_11</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="550" y="50"/></graphics>
+      </place>
+      
+      <place id="free_11">
+        <name><text>Free_11</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="550" y="150"/></graphics>
+      </place>
+      
+      <place id="p_12">
+        <name><text>Node_12</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="600" y="50"/></graphics>
+      </place>
+      
+      <place id="free_12">
+        <name><text>Free_12</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="600" y="150"/></graphics>
+      </place>
+      
+      <place id="p_13">
+        <name><text>Node_13</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="650" y="50"/></graphics>
+      </place>
+      
+      <place id="free_13">
+        <name><text>Free_13</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="650" y="150"/></graphics>
+      </place>
+      
+      <place id="p_14">
+        <name><text>Node_14</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="700" y="50"/></graphics>
+      </place>
+      
+      <place id="free_14">
+        <name><text>Free_14</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="700" y="150"/></graphics>
+      </place>
+      
+      <place id="p_15">
+        <name><text>Node_15</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="750" y="50"/></graphics>
+      </place>
+      
+      <place id="free_15">
+        <name><text>Free_15</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="750" y="150"/></graphics>
+      </place>
+      
+      <place id="p_16">
+        <name><text>Node_16</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="800" y="50"/></graphics>
+      </place>
+      
+      <place id="free_16">
+        <name><text>Free_16</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="800" y="150"/></graphics>
+      </place>
+      
+      <place id="p_17">
+        <name><text>Node_17</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="850" y="50"/></graphics>
+      </place>
+      
+      <place id="free_17">
+        <name><text>Free_17</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="850" y="150"/></graphics>
+      </place>
+      
+      <place id="p_18">
+        <name><text>Node_18</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="900" y="50"/></graphics>
+      </place>
+      
+      <place id="free_18">
+        <name><text>Free_18</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="900" y="150"/></graphics>
+      </place>
+      
+      <place id="p_19">
+        <name><text>Node_19</text></name>
+        <initialMarking><text>0</text></initialMarking>
+        <graphics><position x="950" y="50"/></graphics>
+      </place>
+      
+      <place id="free_19">
+        <name><text>Free_19</text></name>
+        <initialMarking><text>1</text></initialMarking>
+        <graphics><position x="950" y="150"/></graphics>
+      </place>
+      
+      <transition id="move_0_1">
+        <name><text>Move_0_to_1</text></name>
+        <graphics><position x="25" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p0" source="p_0" target="move_0_1"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f1" source="free_1" target="move_0_1"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f0" source="move_0_1" target="free_0"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p1" source="move_0_1" target="p_1"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_1_2">
+        <name><text>Move_1_to_2</text></name>
+        <graphics><position x="75" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p1" source="p_1" target="move_1_2"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f2" source="free_2" target="move_1_2"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f1" source="move_1_2" target="free_1"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p2" source="move_1_2" target="p_2"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_2_3">
+        <name><text>Move_2_to_3</text></name>
+        <graphics><position x="125" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p2" source="p_2" target="move_2_3"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f3" source="free_3" target="move_2_3"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f2" source="move_2_3" target="free_2"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p3" source="move_2_3" target="p_3"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_3_4">
+        <name><text>Move_3_to_4</text></name>
+        <graphics><position x="175" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p3" source="p_3" target="move_3_4"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f4" source="free_4" target="move_3_4"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f3" source="move_3_4" target="free_3"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p4" source="move_3_4" target="p_4"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_4_5">
+        <name><text>Move_4_to_5</text></name>
+        <graphics><position x="225" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p4" source="p_4" target="move_4_5"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f5" source="free_5" target="move_4_5"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f4" source="move_4_5" target="free_4"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p5" source="move_4_5" target="p_5"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_5_6">
+        <name><text>Move_5_to_6</text></name>
+        <graphics><position x="275" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p5" source="p_5" target="move_5_6"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f6" source="free_6" target="move_5_6"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f5" source="move_5_6" target="free_5"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p6" source="move_5_6" target="p_6"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_6_7">
+        <name><text>Move_6_to_7</text></name>
+        <graphics><position x="325" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p6" source="p_6" target="move_6_7"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f7" source="free_7" target="move_6_7"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f6" source="move_6_7" target="free_6"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p7" source="move_6_7" target="p_7"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_7_8">
+        <name><text>Move_7_to_8</text></name>
+        <graphics><position x="375" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p7" source="p_7" target="move_7_8"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f8" source="free_8" target="move_7_8"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f7" source="move_7_8" target="free_7"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p8" source="move_7_8" target="p_8"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_8_9">
+        <name><text>Move_8_to_9</text></name>
+        <graphics><position x="425" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p8" source="p_8" target="move_8_9"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f9" source="free_9" target="move_8_9"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f8" source="move_8_9" target="free_8"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p9" source="move_8_9" target="p_9"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_9_10">
+        <name><text>Move_9_to_10</text></name>
+        <graphics><position x="475" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p9" source="p_9" target="move_9_10"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f10" source="free_10" target="move_9_10"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f9" source="move_9_10" target="free_9"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p10" source="move_9_10" target="p_10"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_10_11">
+        <name><text>Move_10_to_11</text></name>
+        <graphics><position x="525" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p10" source="p_10" target="move_10_11"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f11" source="free_11" target="move_10_11"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f10" source="move_10_11" target="free_10"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p11" source="move_10_11" target="p_11"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_11_12">
+        <name><text>Move_11_to_12</text></name>
+        <graphics><position x="575" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p11" source="p_11" target="move_11_12"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f12" source="free_12" target="move_11_12"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f11" source="move_11_12" target="free_11"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p12" source="move_11_12" target="p_12"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_12_13">
+        <name><text>Move_12_to_13</text></name>
+        <graphics><position x="625" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p12" source="p_12" target="move_12_13"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f13" source="free_13" target="move_12_13"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f12" source="move_12_13" target="free_12"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p13" source="move_12_13" target="p_13"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_13_14">
+        <name><text>Move_13_to_14</text></name>
+        <graphics><position x="675" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p13" source="p_13" target="move_13_14"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f14" source="free_14" target="move_13_14"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f13" source="move_13_14" target="free_13"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p14" source="move_13_14" target="p_14"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_14_15">
+        <name><text>Move_14_to_15</text></name>
+        <graphics><position x="725" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p14" source="p_14" target="move_14_15"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f15" source="free_15" target="move_14_15"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f14" source="move_14_15" target="free_14"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p15" source="move_14_15" target="p_15"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_15_16">
+        <name><text>Move_15_to_16</text></name>
+        <graphics><position x="775" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p15" source="p_15" target="move_15_16"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f16" source="free_16" target="move_15_16"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f15" source="move_15_16" target="free_15"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p16" source="move_15_16" target="p_16"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_16_17">
+        <name><text>Move_16_to_17</text></name>
+        <graphics><position x="825" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p16" source="p_16" target="move_16_17"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f17" source="free_17" target="move_16_17"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f16" source="move_16_17" target="free_16"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p17" source="move_16_17" target="p_17"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_17_18">
+        <name><text>Move_17_to_18</text></name>
+        <graphics><position x="875" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p17" source="p_17" target="move_17_18"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f18" source="free_18" target="move_17_18"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f17" source="move_17_18" target="free_17"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p18" source="move_17_18" target="p_18"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_18_19">
+        <name><text>Move_18_to_19</text></name>
+        <graphics><position x="925" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p18" source="p_18" target="move_18_19"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f19" source="free_19" target="move_18_19"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f18" source="move_18_19" target="free_18"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p19" source="move_18_19" target="p_19"><inscription><text>1</text></inscription></arc>
+      
+      <transition id="move_19_0">
+        <name><text>Move_19_to_0</text></name>
+        <graphics><position x="975" y="100"/></graphics>
+      </transition>
+
+      <arc id="a_take_p19" source="p_19" target="move_19_0"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_check_f0" source="free_0" target="move_19_0"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_ret_f19" source="move_19_0" target="free_19"><inscription><text>1</text></inscription></arc>
+
+      <arc id="a_put_p0" source="move_19_0" target="p_0"><inscription><text>1</text></inscription></arc>
+      
+    </page>
+  </net>
+</pnml>
