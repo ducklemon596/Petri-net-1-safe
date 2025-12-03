@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/ptnet">
+
+    <!-- Places -->
+    <place id="P1"><initialMarking><text>1</text></initialMarking></place>
+    <place id="P2"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P3"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P4"><initialMarking><text>1</text></initialMarking></place>
+    <place id="P5"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P6"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P7"><initialMarking><text>1</text></initialMarking></place>
+    <place id="P8"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P9"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P10"><initialMarking><text>1</text></initialMarking></place>
+    <place id="P11"><initialMarking><text>0</text></initialMarking></place>
+    <place id="P12"><initialMarking><text>0</text></initialMarking></place>
+
+    <!-- Transitions -->
+    <transition id="T1"/>
+    <transition id="T2"/>
+    <transition id="T3"/>
+    <transition id="T4"/>
+    <transition id="T5"/>
+    <transition id="T6"/>
+    <transition id="T7"/>
+    <transition id="T8"/>
+    <transition id="T9"/>
+    <transition id="T10"/>
+
+    <!-- Arcs (no weight) -->
+    <arc id="A1" source="P1" target="T1"/>
+    <arc id="A2" source="T1" target="P2"/>
+    <arc id="A3" source="P2" target="T2"/>
+    <arc id="A4" source="T2" target="P3"/>
+    <arc id="A5" source="P3" target="T3"/>
+    <arc id="A6" source="T3" target="P4"/>
+    <arc id="A7" source="P4" target="T4"/>
+    <arc id="A8" source="T4" target="P5"/>
+    <arc id="A9" source="P5" target="T5"/>
+    <arc id="A10" source="T5" target="P6"/>
+    <arc id="A11" source="P6" target="T6"/>
+    <arc id="A12" source="T6" target="P7"/>
+    <arc id="A13" source="P7" target="T7"/>
+    <arc id="A14" source="T7" target="P8"/>
+    <arc id="A15" source="P8" target="T8"/>
+    <arc id="A16" source="T8" target="P9"/>
+    <arc id="A17" source="P9" target="T9"/>
+    <arc id="A18" source="T9" target="P10"/>
+    <arc id="A19" source="P10" target="T10"/>
+    <arc id="A20" source="T10" target="P11"/>
+
+  </net>
+</pnml>
