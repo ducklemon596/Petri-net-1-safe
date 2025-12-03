@@ -80,53 +80,75 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
 ## API Reference 
 
-### Class `PetriNet`
+### 🕸️ Class `PetriNet`
 
-Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận và thực hiện tính toán các trạng thái khả đạt (reachable markings) bằng phương pháp duyệt đồ thị tường minh (Explicit State Space Exploration).
+Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận 🔢 và thực hiện tính toán các trạng thái khả đạt (*reachable markings*) bằng phương pháp duyệt đồ thị tường minh 🗺️ (**Explicit State Space Exploration**).
 
-#### `__init__(self, pnml_file_path)`
+---
+
+### 🛠️ Task 1: Khởi tạo & Xử lý Dữ liệu (Parsing & Weights)
+
+Nhiệm vụ này tập trung vào việc thiết lập môi trường, đọc dữ liệu đầu vào và xây dựng cấu trúc mạng cơ bản.
+
+#### 🧩 `__init__(self, pnml_file_path)`
 
 **Chức năng:**
 
-* Khởi tạo đối tượng mạng Petri.
-* Thiết lập các cấu trúc dữ liệu rỗng (Places, Transitions, Ma trận liên thuộc).
-* Tự động gọi phương thức `read_pnml_file` để nạp dữ liệu từ đường dẫn được cung cấp.
+* 🏗️ Khởi tạo đối tượng mạng Petri.
+* 🗑️ Thiết lập các cấu trúc dữ liệu rỗng (`Places`, `Transitions`, `Ma trận liên thuộc`).
+* 🔄 Tự động gọi phương thức `read_pnml_file` để nạp dữ liệu từ đường dẫn được cung cấp.
 
 **Tham số:**
 
 * `pnml_file_path`: Đường dẫn đến file `.pnml` chứa cấu trúc mạng Petri.
 
----
-
-#### `read_pnml_file(self, file_path: str)`
+#### 📄 `read_pnml_file(self, file_path: str)`
 
 Phân tích cú pháp file XML (định dạng PNML) để xây dựng mô hình toán học của mạng.
 
 **Chức năng:**
 
-* Sử dụng thư viện `xml.etree.ElementTree` để duyệt cây XML.
-* Trích xuất danh sách **Places** và **Initial Marking** (trạng thái ban đầu).
-* Trích xuất danh sách **Transitions**.
-* Xây dựng hai ma trận trọng số cơ bản:
-  * `self.pre_matrix`: Ma trận đầu vào (Place $\to$ Transition).
-  * `self.post_matrix`: Ma trận đầu ra (Transition $\to$ Place).
+* 🌲 Sử dụng thư viện `xml.etree.ElementTree` để duyệt cây XML.
+* 📍 Trích xuất danh sách **Places** và **Initial Marking** (trạng thái ban đầu).
+* ⚡ Trích xuất danh sách **Transitions**.
+* 🧱 Xây dựng hai ma trận trọng số cơ bản:
+    * `self.pre_matrix`: Ma trận đầu vào (Place $\to$ Transition).
+    * `self.post_matrix`: Ma trận đầu ra (Transition $\to$ Place).
 
 **Tham số:**
 
 * `file_path`: Đường dẫn tuyệt đối hoặc tương đối đến file `.pnml`.
 
+#### ⚖️ `read_weight(self, weight_file_path)`
+
+Đọc dữ liệu trọng số cho các Place từ file văn bản bên ngoài (phục vụ cho các bài toán tối ưu hóa).
+
+**Chức năng:**
+
+* 📥 Đọc file text chứa các số nguyên (cách nhau bởi khoảng trắng hoặc xuống dòng).
+* 🔢 Chuyển đổi dữ liệu thành mảng NumPy (`self.c`).
+* ✅ Kiểm tra tính hợp lệ: Số lượng trọng số trong file phải khớp với số lượng Place trong mạng (`self.num_places`).
+
+**Tham số:**
+
+* `weight_file_path`: Đường dẫn đến file chứa trọng số.
+
 ---
 
-#### `explicit_reachable_markings_computation(self, method="bfs")`
+### 🚀 Task 2: Tính toán Không gian Trạng thái (State Space Computation)
+
+Nhiệm vụ này thực hiện các thuật toán cốt lõi để khám phá, tính toán và hiển thị không gian trạng thái của mạng.
+
+#### 🧠 `explicit_reachable_markings_computation(self, method="bfs")`
 
 Thực hiện thuật toán duyệt đồ thị để tìm kiếm toàn bộ không gian trạng thái khả đạt từ trạng thái ban đầu ($M_0$).
 
 **Chức năng:**
 
-* Hỗ trợ hai chiến lược duyệt: **BFS** (Breadth-First Search) và **DFS** (Depth-First Search).
-* Kiểm tra điều kiện kích hoạt (enable) của transition: $M \ge Pre$.
-* Tính toán trạng thái mới theo công thức: $M_{new} = M - Pre + Post$.
-* **Cơ chế Timeout:** Tự động dừng và trả về lỗi nếu thời gian thực thi vượt quá 10 giây.
+* 🔍 Hỗ trợ hai chiến lược duyệt: **BFS** (Breadth-First Search) và **DFS** (Depth-First Search).
+* 🚦 Kiểm tra điều kiện kích hoạt (enable) của transition: $M \ge Pre$.
+* 🧮 Tính toán trạng thái mới theo công thức: $M_{new} = M - Pre + Post$.
+* ⏱️ **Cơ chế Timeout:** Tự động dừng và trả về lỗi nếu thời gian thực thi vượt quá 10 giây.
 
 **Tham số:**
 
@@ -137,17 +159,15 @@ Thực hiện thuật toán duyệt đồ thị để tìm kiếm toàn bộ kh�
 * `marking_states` (list): Danh sách các vector trạng thái (markings) tìm thấy. (Trả về `-1` nếu timeout).
 * `elapsed_time` (float): Thời gian thực thi thuật toán tính bằng giây.
 
----
-
-#### `print_reachable_markings(self, method="bfs")`
+#### 💻 `print_reachable_markings(self, method="bfs")`
 
 Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn hình console theo định dạng dễ đọc.
 
 **Chức năng:**
 
-* Gọi hàm `explicit_reachable_markings_computation`.
-* Hiển thị tổng số trạng thái và thời gian thực thi.
-* Liệt kê chi tiết từng vector trạng thái tìm được.
+* 📞 Gọi hàm `explicit_reachable_markings_computation`.
+* 📊 Hiển thị tổng số trạng thái và thời gian thực thi.
+* 📝 Liệt kê chi tiết từng vector trạng thái tìm được.
 
 **Tham số:**
 
@@ -163,22 +183,7 @@ Reachable marking states
 ----------------------------------------
 [1, 0, 0]
 [0, 1, 0]
-[0, 0, 1]
-```
----
-#### `read_weight(self, weight_file_path)`
-
-Hàm tiện ích dùng để thực thi thuật toán và in kết quả ra màn hình console theo định dạng dễ đọc.
-
-**Chức năng:**
-
-* Đọc file text chứa các số nguyên (cách nhau bởi khoảng trắng hoặc xuống dòng).
-* Chuyển đổi dữ liệu thành mảng NumPy (`self.c`).
-* Kiểm tra tính hợp lệ: Số lượng trọng số trong file phải khớp với số lượng Place trong mạng (`self.num_places`).
-
-**Tham số:**
-
-* `weight_file_path`: Đường dẫn đến file chứa trọng số.
+[0, 0, 1]```
 
 ---
 
