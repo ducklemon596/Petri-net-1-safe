@@ -373,7 +373,7 @@ Hàm tiện ích để hiển thị kết quả tìm kiếm deadlock ra màn hì
 
 * 🔄 Tự động đồng bộ trọng số với vector c của Petri net nếu có.
 
-*🏁 Trả về trạng thái có điểm cao nhất, hoặc điểm cao nhất trong số các trạng thái hợp lệ (nếu có ràng buộc).
+* 🏁 Trả về trạng thái có điểm cao nhất, hoặc điểm cao nhất trong số các trạng thái hợp lệ (nếu có ràng buộc).
 
 ### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
 
@@ -405,7 +405,7 @@ Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt
 
 Tối ưu hóa trạng thái khả đạt với ràng buộc đặt trước trên từng Place.
 
-Chức năng:
+**Chức năng:**
 
 * 🔍 Duyệt qua tất cả trạng thái trong reachable_bdd bằng pick_iter.
 
