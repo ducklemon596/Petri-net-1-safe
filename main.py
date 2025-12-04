@@ -94,15 +94,17 @@ def main(pnml_file=None):
     # =====================================================================
     print("\n[TASK 2] EXPLICIT TRAVERSE")
     print("-" * 60)
-
+    timeout = 100.0
     tracemalloc.start()
     explicit = ExplicitTraverse(petri_net)
-    states_explicit, elapsed_time_explicit = explicit.compute_reachable_markings(method="bfs", timeout=20.0)
+    states_explicit, elapsed_time_explicit = explicit.compute_reachable_markings(method="bfs", timeout=timeout)
     current_task2, peak_task2 = tracemalloc.get_traced_memory()
     tracemalloc.stop()
-
-    print(f"Total reachable states: {len(states_explicit)}")
-    print(f"Execution time: {elapsed_time_explicit:.6f} seconds")
+    if (states_explicit == -1):
+        print(f"Explicit traversal timed out. Exceeded time limit of {timeout} seconds")
+    else:
+        print(f"Total reachable states: {len(states_explicit)}")
+        print(f"Execution time: {elapsed_time_explicit:.4f} seconds")
     print(f"Peak memory: {peak_task2 / 1024 / 1024:.2f} MB")
     # =====================================================================
     # TASK 3: BDD REACHABILITY
@@ -117,7 +119,7 @@ def main(pnml_file=None):
     tracemalloc.stop()
 
     print(f"Total reachable states: {total_states}")
-    print(f"Execution time: {elapsed_time:.6f} seconds")
+    print(f"Execution time: {elapsed_time:.4f} seconds")
     print(f"Peak memory: {peak_task3 / 1024 / 1024:.2f} MB")
     pnml_basename = os.path.splitext(os.path.basename(pnml_file))[0]
     bdd_reach.dump_bdd(f"bdd_visualizations/bdd_reachability_{pnml_basename}.dot", roots=[states_bdd])
@@ -138,7 +140,7 @@ def main(pnml_file=None):
         print(f"Deadlock found at marking: {deadlock_marking}")
     else:
         print("No deadlock found in reachable states")
-    print(f"Deadlock detection time: {deadlock_time:.6f} seconds")
+    print(f"Deadlock detection time: {deadlock_time:.4f} seconds")
 
     # =====================================================================
     # TASK 5: OPTIMIZATION
@@ -151,7 +153,7 @@ def main(pnml_file=None):
 
     print(f"Best marking: {best_marking}")
     print(f"Optimal score: {score}")
-    print(f"Optimization time: {opt_time:.6f} seconds")
+    print(f"Optimization time: {opt_time:.4f} seconds")
 
     # =====================================================================
     # BENCHMARK SUMMARY
@@ -161,8 +163,11 @@ def main(pnml_file=None):
     print("=" * 60)
     print(f"\n{'Method':<20} {'States':<12} {'Time (s)':<12} {'Memory (MB)':<15}")
     print("-" * 60)
-    print(f"{'Explicit (BFS)':<20} {len(states_explicit):<12} {elapsed_time_explicit:<12.6f} {peak_task2 / 1024 / 1024:<15.2f}")
-    print(f"{'BDD':<20} {total_states:<12} {elapsed_time:<12.6f} {peak_task3 / 1024 / 1024:<15.2f}")
+    if states_explicit == -1:
+        print(f"{'Explicit (BFS)':<20} {'Timeout':<12} {'-':<12} {peak_task2 / 1024 / 1024:<15.2f}")
+    else:
+        print(f"{'Explicit (BFS)':<20} {len(states_explicit):<12} {elapsed_time_explicit:<12.4f} {peak_task2 / 1024 / 1024:<15.2f}")
+    print(f"{'BDD':<20} {total_states:<12} {elapsed_time:<12.4f} {peak_task3 / 1024 / 1024:<15.2f}")
     print("-" * 60)
     
     if peak_task2 < peak_task3:
@@ -171,9 +176,9 @@ def main(pnml_file=None):
         print(f"\u2713 Lower memory: BDD ({peak_task3 / 1024 / 1024:.2f} MB)")
     
     if elapsed_time_explicit < elapsed_time:
-        print(f"\u2713 Faster: Explicit ({elapsed_time_explicit:.6f} s)")
+        print(f"\u2713 Faster: Explicit ({elapsed_time_explicit:.4f} s)")
     else:
-        print(f"\u2713 Faster: BDD ({elapsed_time:.6f} s)")
+        print(f"\u2713 Faster: BDD ({elapsed_time:.4f} s)")
 
     print("\n" + "=" * 60)
     print("TEST COMPLETED")
