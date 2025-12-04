@@ -261,32 +261,6 @@ Trích xuất công thức logic từ một node BDD.
 
 * 🐛 Hữu ích khi debug hoặc ghi log kiểm tra lỗi.
 
-### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
-
-Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt dựa trên hệ thống trọng số tùy chỉnh.
-
-**Chức năng:**
-
-* 🕵️‍♂️ Duyệt qua các nghiệm (markings) chứa trong `reachable_bdd` bằng phương thức `pick_iter`.
-
-* ⚖️ Tính toán điểm số (score) cho từng trạng thái theo công thức tổng quát: `score = Σ (has_token × weight)`.
-
-* 🏆 So sánh và lưu giữ trạng thái có **tổng điểm cao nhất**.
-
-**Tham số:**
-
-* `reachable_bdd`: Đối tượng BDD biểu diễn tập hợp các trạng thái khả đạt cần tìm kiếm.
-
-* `weights` (dictionary, tùy chọn): Bảng trọng số cho từng Place (ví dụ: `{'p1': 10, 'p2': -5}`). Mặc định là 1 cho tất cả Places nếu để `None`.
-
-**Trả về:** tuple gồm:
-
-* `best_marking` (dict): Cấu hình trạng thái đạt điểm cao nhất (hoặc `None` nếu không tìm thấy).
-
-* `max_score` (float/int): Điểm số tối ưu tương ứng.
-
-* `duration` (float): Thời gian thực thi quá trình tìm kiếm.
-
 ### 🔒 Task 4: Phát hiện Deadlock (Hybrid ILP + BDD)
 
 Nhiệm vụ này triển khai thuật toán phát hiện Deadlock thông minh bằng cách kết hợp sức mạnh của **Integer Linear Programming (ILP)** và **BDD**.
@@ -384,6 +358,79 @@ Hàm điều phối chính để tìm kiếm deadlock trong tập trạng thái 
 #### 📢 `print_deadlock(self, deadlock)`
 
 Hàm tiện ích để hiển thị kết quả tìm kiếm deadlock ra màn hình console một cách rõ ràng.
+
+### Task 5: Tối ưu hóa khả năng tiếp cận (Reachable optimization)
+
+### Class `Optimization`
+
+**Ý tưởng chính:**
+
+* ⚡ Dựa trên BDD để duyệt toàn bộ không gian trạng thái khả đạt một cách tối ưu.
+
+* ⚖️ Tối ưu hóa dựa trên trọng số — mỗi trạng thái được đánh điểm bằng tổng trọng số của các place đang có token.
+
+* 🎯 Hỗ trợ ràng buộc: Cho phép giới hạn số token trên từng place để tìm trạng thái "tối ưu hợp lệ".
+
+* 🔄 Tự động đồng bộ trọng số với vector c của Petri net nếu có.
+
+*🏁 Trả về trạng thái có điểm cao nhất, hoặc điểm cao nhất trong số các trạng thái hợp lệ (nếu có ràng buộc).
+
+### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
+
+Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt dựa trên hệ thống trọng số tùy chỉnh.
+
+**Chức năng:**
+
+* 🕵️‍♂️ Duyệt qua các nghiệm (markings) chứa trong `reachable_bdd` bằng phương thức `pick_iter`.
+
+* ⚖️ Tính toán điểm số (score) cho từng trạng thái theo công thức tổng quát: `score = Σ (has_token × weight)`.
+
+* 🏆 So sánh và lưu giữ trạng thái có **tổng điểm cao nhất**.
+
+**Tham số:**
+
+* `reachable_bdd`: Đối tượng BDD biểu diễn tập hợp các trạng thái khả đạt cần tìm kiếm.
+
+* `weights` (dictionary, tùy chọn): Bảng trọng số cho từng Place (ví dụ: `{'p1': 10, 'p2': -5}`). Mặc định là 1 cho tất cả Places nếu để `None`.
+
+**Trả về:** tuple gồm:
+
+* `best_marking` (dict): Cấu hình trạng thái đạt điểm cao nhất (hoặc `None` nếu không tìm thấy).
+
+* `max_score` (float/int): Điểm số tối ưu tương ứng.
+
+* `duration` (float): Thời gian thực thi quá trình tìm kiếm.
+
+### optimize_with_constraints(self, reachable_bdd, weights=None, constraints=None)
+
+Tối ưu hóa trạng thái khả đạt với ràng buộc đặt trước trên từng Place.
+
+Chức năng:
+
+* 🔍 Duyệt qua tất cả trạng thái trong reachable_bdd bằng pick_iter.
+
+* ⚖️ Tính điểm từng trạng thái theo công thức: score = Σ (has_token × weight).
+
+* 🚧 Chỉ chấp nhận các trạng thái thỏa constraints:
+– Mỗi constraint là (min, max) cho số token tại một Place.
+
+* 🥇 Lưu lại trạng thái hợp lệ có tổng điểm lớn nhất.
+
+**Tham số:**
+
+* `reachable_bdd`: BDD chứa tập trạng thái khả đạt.
+
+* `weights` (dict, tùy chọn): Trọng số mỗi Place. Mặc định 1 nếu không cung cấp hoặc nếu petri_net.c không dùng được.
+
+* `constraints` (dict, tùy chọn): Ràng buộc dạng { 'p1': (0,1), 'p2': (1,1) }.
+
+**Trả về:** tuple gồm:
+
+* `best_marking` (dict): Trạng thái hợp lệ có điểm cao nhất (hoặc None nếu không có).
+
+* `max_score` (int/float): Điểm tối ưu.
+
+* `duration` (float): Thời gian chạy.
 
 ---
 
