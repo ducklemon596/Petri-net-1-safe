@@ -199,18 +199,11 @@ Class này cung cấp các phương thức cốt lõi để xây dựng logic ch
 
 **Chức năng:**
 
-* 🛠️ Khởi tạo đối tượng solver và thiết lập môi trường BDD.
+* Khởi tạo đối tượng solver và thiết lập môi trường BDD.
+* Tự động khai báo các cặp biến BDD cho mỗi Place:
 
-<<<<<<< HEAD
-  * `p`: Biến đại diện cho trạng thái hiện tại.
+  * `x_p`: Biến đại diện cho trạng thái hiện tại.
   * `y_p`: Biến đại diện cho trạng thái tiếp theo sau khi bắn transition.
-=======
-* 📦 Tự động khai báo các cặp biến BDD nhị phân cho mỗi Place:
-
-  * `x_p`: Biến đại diện cho trạng thái **hiện tại**.
-
-  * `y_p`: Biến đại diện cho trạng thái **tiếp theo** sau khi bắn transition.
->>>>>>> 5785d3ae8328298ab1db64b4583055e156cb142c
 
 **Tham số:**
 
@@ -263,36 +256,12 @@ Trích xuất công thức logic từ một node BDD.
 
 **Mục đích:**
 
-* 🔬 Phân tích cấu trúc logic bên trong BDD.
+* Phân tích cấu trúc logic bên trong BDD.
+* Hữu ích khi debug hoặc ghi log.
 
 * 🐛 Hữu ích khi debug hoặc ghi log kiểm tra lỗi.
 
-<<<<<<< HEAD
-#### `dump_bdd_to_file(self, bdd_node, file_path)`
-
-Ghi cấu trúc BDD ra file định dạng DOT để dễ dàng trực quan hóa bằng các công cụ hỗ trợ như Graphviz.
-
-**Tham số:**
-
-* `bdd_node`: Node BDD cần xuất.
-* `file_path`: Đường dẫn file đầu ra (ví dụ: `output.dot`).
-
----
-
-#### `dot_to_png(self, dot_file_path, png_file_path)`
-Chuyển đổi file DOT thành ảnh PNG sử dụng Graphviz.
-
-**Tham số:**
-
-* `dot_file_path`: Đường dẫn file DOT đầu vào.
-* `png_file_path`: Đường dẫn file PNG đầu ra.
-
----
-
 ### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
-=======
-#### 🎯 `optimize_reachable_marking(self, reachable_bdd, weights=None)`
->>>>>>> 5785d3ae8328298ab1db64b4583055e156cb142c
 
 Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt dựa trên hệ thống trọng số tùy chỉnh.
 
