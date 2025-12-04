@@ -64,7 +64,7 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 ## Thêm File PNML Mới
 
 * Đặt các file `.pnml` của bạn vào thư mục `Test_PNML_Files/`.
-* Mở và chỉnh sửa `main.py` để trỏ đến file PNML bạn muốn phân tích.
+* Chạy python main.py <your_pnml_file> để phân tích file của bạn.
 
 ## Yêu Cầu
 
