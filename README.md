@@ -80,15 +80,13 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
 ## API Reference 
 
-### 🕸️ Class `PetriNet`
-
-Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận 🔢 và thực hiện tính toán các trạng thái khả đạt (*reachable markings*) bằng phương pháp duyệt đồ thị tường minh 🗺️ (**Explicit State Space Exploration**).
-
----
-
 ### 🛠️ Task 1: Khởi tạo & Xử lý Dữ liệu (Parsing & Weights)
 
 Nhiệm vụ này tập trung vào việc thiết lập môi trường, đọc dữ liệu đầu vào và xây dựng cấu trúc mạng cơ bản.
+
+### 🕸️ Class `PetriNet`
+
+Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận 🔢 và thực hiện tính toán các trạng thái khả đạt (*reachable markings*) bằng phương pháp duyệt đồ thị tường minh 🗺️ (**Explicit State Space Exploration**).
 
 #### 🧩 `__init__(self, pnml_file_path)`
 
@@ -188,54 +186,59 @@ Reachable marking states
 
 ---
 
+### 🌳 Task 3: Phân tích bằng BDD (Reachability & Optimization)
+
+Nhiệm vụ này sử dụng cấu trúc dữ liệu **Binary Decision Diagrams (BDD)** để biểu diễn và xử lý không gian trạng thái khổng lồ một cách hiệu quả, đồng thời hỗ trợ tìm kiếm trạng thái tối ưu.
+
 ### Class `BDD_Reachability`
 
-Class này cung cấp các phương thức để xây dựng và phân tích không gian trạng thái của mạng Petri sử dụng cấu trúc dữ liệu **Binary Decision Diagrams (BDD)**.
+Class này cung cấp các phương thức cốt lõi để xây dựng logic chuyển đổi và phân tích trạng thái mạng Petri trên nền tảng BDD.
 
-#### `__init__(self, petri_net: PetriNet)`
+#### ⚙️ `__init__(self, petri_net: PetriNet)`
 
 **Chức năng:**
 
-* Khởi tạo đối tượng solver và thiết lập môi trường BDD.
-* Tự động khai báo các cặp biến BDD cho mỗi Place:
+* 🛠️ Khởi tạo đối tượng solver và thiết lập môi trường BDD.
 
-  * `x_p`: Biến đại diện cho trạng thái hiện tại.
-  * `y_p`: Biến đại diện cho trạng thái tiếp theo sau khi bắn transition.
+* 📦 Tự động khai báo các cặp biến BDD nhị phân cho mỗi Place:
+
+  * `x_p`: Biến đại diện cho trạng thái **hiện tại**.
+
+  * `y_p`: Biến đại diện cho trạng thái **tiếp theo** sau khi bắn transition.
 
 **Tham số:**
 
 * `petri_net`: Đối tượng chứa cấu trúc mạng Petri (Places, Transitions và các ma trận liên thuộc).
 
----
+#### 🌉 `build_transition(self)`
 
-#### `build_transition(self)`
-
-Xây dựng BDD khổng lồ đại diện cho **quan hệ chuyển đổi toàn cục** ( R_{total} ) của mạng.
+Xây dựng BDD khổng lồ đại diện cho **quan hệ chuyển đổi toàn cục** ($R_{total}$) của mạng.
 
 **Chức năng:**
 
-* Duyệt qua từng transition trong mạng.
-* Tự động phát hiện Input arcs và Output arcs.
-* Xây dựng logic **Enable** (điều kiện kích hoạt) và **Update** (cập nhật token).
-* Áp dụng **Frame Axiom** cho các Place không tham gia transition (giữ nguyên giá trị token).
+* 🔄 Duyệt qua từng transition trong mạng.
 
----
+* 🔗 Tự động phát hiện Input arcs và Output arcs.
 
-#### `compute_reachable_states(self)`
+* 🚦 Xây dựng logic **Enable** (điều kiện kích hoạt) và **Update** (cập nhật token).
+
+* 🖼️ Áp dụng **Frame Axiom** cho các Place không tham gia transition (giữ nguyên giá trị token).
+
+#### 🔄 `compute_reachable_states(self)`
 
 Thực hiện vòng lặp **fixed-point iteration** để tính toàn bộ tập trạng thái khả đạt từ trạng thái ban đầu.
 
 **Trả về:** tuple gồm:
 
-* `current_states` (BDD Object): Biểu diễn tập trạng thái.
+* `current_states` (BDD Object): Đối tượng BDD biểu diễn tập trạng thái.
+
 * `total_states` (int): Số lượng trạng thái tìm thấy.
-* `time` (float): Thời gian thực thi.
 
----
+* `time` (float): Thời gian thực thi tính toán.
 
-#### `print_reachable_states_list(self, states_bdd)`
+#### 🖨️ `print_reachable_states_list(self, states_bdd)`
 
-Hàm tiện ích dùng để "giải nén" node BDD và in ra danh sách markings dạng dictionary.
+Hàm tiện ích dùng để "giải nén" node BDD và in ra danh sách markings dưới dạng dictionary dễ đọc.
 
 **Đầu ra ví dụ:**
 
@@ -245,155 +248,142 @@ Hàm tiện ích dùng để "giải nén" node BDD và in ra danh sách marking
 
 ---
 
-#### `get_expr_from_bdd(self, bdd_node) -> str`
+
+#### 🧬 `get_expr_from_bdd(self, bdd_node) -> str`
 
 Trích xuất công thức logic từ một node BDD.
 
-**Trả về:** Chuỗi ký tự dạng `ite(...)`.
+**Trả về:** Chuỗi ký tự dạng `ite(...)` (If-Then-Else).
 
 **Mục đích:**
 
-* Phân tích cấu trúc logic bên trong BDD.
-* Hữu ích khi debug hoặc ghi log.
+* 🔬 Phân tích cấu trúc logic bên trong BDD.
 
----
+* 🐛 Hữu ích khi debug hoặc ghi log kiểm tra lỗi.
 
-### `optimize_reachable_marking(self, reachable_bdd, weights=None)`
+#### 🎯 `optimize_reachable_marking(self, reachable_bdd, weights=None)`
 
 Tìm kiếm trạng thái tối ưu trong không gian trạng thái khả đạt dựa trên hệ thống trọng số tùy chỉnh.
 
-**Chức năng:** 
+**Chức năng:**
 
-* Duyệt qua các nghiệm (markings) chứa trong `reachable_bdd` bằng phương thức `pick_iter`.
-* Tính toán điểm số (score) cho từng trạng thái theo công thức tổng quát: `score = Σ (has_token × weight)`.
-* So sánh và lưu giữ trạng thái có **tổng điểm cao nhất**.
+* 🕵️‍♂️ Duyệt qua các nghiệm (markings) chứa trong `reachable_bdd` bằng phương thức `pick_iter`.
+
+* ⚖️ Tính toán điểm số (score) cho từng trạng thái theo công thức tổng quát: `score = Σ (has_token × weight)`.
+
+* 🏆 So sánh và lưu giữ trạng thái có **tổng điểm cao nhất**.
 
 **Tham số:**
 
 * `reachable_bdd`: Đối tượng BDD biểu diễn tập hợp các trạng thái khả đạt cần tìm kiếm.
-* `weights` (dictionary, tùy chọn): Bảng trọng số cho từng Place (ví dụ: `{'p1': 10, 'p2': -5}`). Mặc định là 1 cho tất cả Places nếu để `None`
+
+* `weights` (dictionary, tùy chọn): Bảng trọng số cho từng Place (ví dụ: `{'p1': 10, 'p2': -5}`). Mặc định là 1 cho tất cả Places nếu để `None`.
 
 **Trả về:** tuple gồm:
 
-* `best_marking` (dict): Cấu hình trạng thái đạt điểm cao nhất (hoặc None nếu không tìm thấy).
+* `best_marking` (dict): Cấu hình trạng thái đạt điểm cao nhất (hoặc `None` nếu không tìm thấy).
+
 * `max_score` (float/int): Điểm số tối ưu tương ứng.
+
 * `duration` (float): Thời gian thực thi quá trình tìm kiếm.
 
----
+### 🔒 Task 4: Phát hiện Deadlock (Hybrid ILP + BDD)
+
+Nhiệm vụ này triển khai thuật toán phát hiện Deadlock thông minh bằng cách kết hợp sức mạnh của **Integer Linear Programming (ILP)** và **BDD**.
 
 ### Class `ILP_BDD_Deadlock_Detection`
 
-Class này triển khai thuật toán phát hiện deadlock bằng cách **kết hợp ILP và BDD**.  
-Ý tưởng chính:
+**Ý tưởng chính:**
 
-* Với mạng nhỏ → kiểm tra toàn bộ reachable bằng ILP (tuyệt đối chính xác).
-* Với mạng vừa/lớn → dùng BDD để tìm ra các marking deadlock, sau đó xác minh lại bằng ILP để đảm bảo đúng.
+* 🐣 **Mạng nhỏ:** Kiểm tra toàn bộ trạng thái reachable bằng ILP (độ chính xác tuyệt đối).
 
----
+* 🦖 **Mạng vừa/lớn:** Dùng BDD để lọc nhanh các marking nghi ngờ là deadlock, sau đó xác minh lại bằng ILP để đảm bảo tính đúng đắn.
 
-#### `__init__(...)`
+#### 🏗️ `__init__(...)`
 
-Khởi tạo bộ phát hiện deadlock.
+Khởi tạo bộ phát hiện deadlock và xây dựng mô hình toán học nền tảng.
 
 **Chức năng:**
 
-* Liên kết thông tin từ PetriNet và BDD vào ILP framework.
-* Tạo input places / output places cho từng transition từ `pre_matrix` và `post_matrix`.
-* Xây dựng mô hình ILP gồm:
-  * Biến nhị phân `e_t` cho mỗi transition (transition t có enabled hay không).
-  * Một constraint tương ứng cho mỗi transition.
-* Khởi tạo giới hạn cấu trúc mạng Petri để lựa chọn cách tìm deadlock.
+* 🔗 Liên kết thông tin từ `PetriNet` và `BDD` vào ILP framework.
+
+* 📐 Xây dựng mô hình ILP gồm:
+
+  * Biến nhị phân `e_t` cho mỗi transition (transition $t$ có enabled hay không).
+
+  * Các ràng buộc (constraints) tương ứng cho mỗi transition.
+
+* 📏 Thiết lập các giới hạn cấu trúc (marking limit, place limit...) để tự động chọn chiến lược tìm kiếm phù hợp.
 
 **Tham số:**
 
-* `petri_net`: Đối tượng chứa cấu trúc mạng Petri. 
-* `bdd_reach`: BDD_Reachability đã tính trước.
-* `reachable_marking_nums`: Số marking reachable.
-* `marking_limit`, `place_limit`, `transition_limit`: giới hạn cấu trúc mạng Petri nhỏ.
+* `petri_net`, `bdd_reach`: Các đối tượng dữ liệu đầu vào.
 
----
+* `marking_limit`, `place_limit`, `transition_limit`: Các ngưỡng để phân loại kích thước mạng.
 
-#### `_state_to_marking(self, state)`
+#### 🔄 `_state_to_marking(self, state)`
 
-Chuyển nghiệm trạng thái BDD (`pick` hoặc `pick_iter`) sang dạng marking.
+Chuyển đổi định dạng dữ liệu từ nghiệm BDD sang Dictionary Marking tiêu chuẩn.
 
 **Chức năng:**
 
-* Nhận một state BDD: ví dụ `{'x_p1': 1, 'x_p2': 0, 'x_p3': 1}`.
-* Chuyển thành dictionary `{place: token}`: ví dụ `{'p1': 1, 'p2': 0, 'p3': 1}`.
+* Nhận input: `{'x_p1': 1, 'x_p2': 0}`.
 
-**Tham số:**
+* Trả về output: `{'p1': 1, 'p2': 0}`.
 
-* `state`: dictionary BDD node từ `pick` hoặc `pick_iter`.
+#### 🕵️‍♂️ `_is_deadlock_ilp(self, marking)`
 
-**Trả về:**  
-
-* `marking` (dict): mapping {place_name: 0/1}.
-
----
-
-#### `_is_deadlock_ilp(self, marking)`
-
-Kiểm tra một marking có phải deadlock hay không bằng cách giải mô hình ILP.
+Kiểm tra một marking cụ thể có phải là deadlock hay không bằng cách giải mô hình ILP.
 
 **Chức năng:**
 
-* Tính toán điều kiện kích hoạt cho từng transition.
-* Giải mô hình ILP để xác định tổng số transition enabled: `enabled_total = Σ_{t ∈ T}(enabled_t)`
-* Xác định marking là deadlock nếu enabled_total = 0.
+* 🧮 Tính toán điều kiện kích hoạt cho từng transition dựa trên token hiện có.
 
-**Tham số:**
+* 📉 Giải mô hình ILP để xác định tổng số transition enabled: `enabled_total = Σ(enabled_t)`.
 
-`marking` (dict): marking cần kiểm tra deadlock.
+* ✅ Kết luận: Marking là deadlock nếu `enabled_total == 0`.
 
-**Trả về:** `True` nếu marking là deadlock, ngược lại `False`.
+**Trả về:** `True` nếu là deadlock, ngược lại `False`.
 
----
+#### 🧱 `_build_dead_bdd(self)`
 
-#### `_build_dead_bdd(self)`
-
-Xây dựng BDD biểu diễn tất cả marking deadlock.
+Xây dựng một BDD biểu diễn tập hợp **tất cả các marking gây ra deadlock** về mặt lý thuyết.
 
 **Chức năng:**
 
-* Với mỗi transition:
-  * Nếu không có input → transition luôn enabled: `t_enabled = True`.
-  * Nếu có input → transition enabled khi tất cả input places có token: `t_enabled = x_p1 & x_p2 & ...`.
-* Kết hợp OR tất cả transitions để tạo BDD biểu diễn bất kỳ transition nào được enabled: `enabled_any = t1_enabled | t2_enabled | ... | tn_enabled`.
-* Phủ định BDD `enabled_any` để thu được tập marking deadlock:
-  `dead_bdd = ~enabled_any`.
+* 1️⃣ Xây dựng logic `enabled` cho từng transition (dựa trên Input Arcs).
 
-**Trả về:**  
-`dead_bdd`: BDD object đại diện cho tập marking deadlock.
+* 2️⃣ Tạo biểu thức `enabled_any` bằng cách **OR** tất cả các transition lại.
 
----
+* 3️⃣ Phủ định biểu thức trên (`NOT enabled_any`) để thu được `dead_bdd` (tập hợp các trạng thái mà không transition nào bắn được).
 
-#### `find_deadlock(self, states_bdd)`
+**Trả về:** Đối tượng `dead_bdd`.
 
-Tìm một marking deadlock trong tập reachable.
+#### 🔍 `find_deadlock(self, states_bdd)`
 
-**Chức năng:**
+Hàm điều phối chính để tìm kiếm deadlock trong tập trạng thái khả đạt.
 
-* Mạng nhỏ: Duyệt toàn bộ reachable marking bằng BDD, kiểm tra từng marking với ILP.
-* Mạng vừa/lớn:
-  * Xây dựng dead_bdd từ `_build_dead_bdd()`.
-  * Lọc candidate: `candidate_bdd = states_bdd & dead_bdd`.
-  * Chọn một hoặc vài marking từ BDD candidate để xác minh lại bằng ILP (tối đa 100 nghiệm nếu cần).
+**Chiến lược:**
 
-**Tham số:**
+* **Mạng nhỏ:** Duyệt toàn bộ reachable marking từ BDD, kiểm tra từng cái một với ILP.
 
-* `states_bdd`: BDD biểu diễn tập reachable states.
+* **Mạng lớn:**
+
+  1. Lấy `dead_bdd` từ hàm `_build_dead_bdd`.
+
+  2. Lọc ứng viên: `candidate_bdd = states_bdd AND dead_bdd`.
+
+  3. Chọn mẫu (tối đa 100 nghiệm) từ `candidate_bdd` để xác minh kỹ bằng ILP.
 
 **Trả về:** tuple gồm:
 
-* `marking_deadlock` (dict/None): marking deadlock tìm được (hoặc None nếu không tìm thấy).
-* `duration` (float): thời gian thực thi quá trình tìm Deadlock (giây).
+* `marking_deadlock` (dict/None): Deadlock tìm được.
 
----
+* `duration` (float): Thời gian tìm kiếm.
 
-#### print_deadlock(self, deadlock)
+#### 📢 `print_deadlock(self, deadlock)`
 
-In ra deadlock nếu tìm thấy.
+Hàm tiện ích để hiển thị kết quả tìm kiếm deadlock ra màn hình console một cách rõ ràng.
 
 ---
 
