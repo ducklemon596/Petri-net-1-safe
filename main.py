@@ -79,7 +79,7 @@ def main(pnml_file=None):
     print("\n[TASK 1] PARSER - Reading PNML file")
     print("-" * 60)
 
-    petri_net = PetriNet(pnml_file)
+    petri_net = PetriNet(pnml_file, "Test_PNML_Files/weight.txt")
 
     print(f"Places: {petri_net.places}")
     print(f"Transitions: {petri_net.transitions}")
@@ -88,6 +88,7 @@ def main(pnml_file=None):
     print(f"Initial marking: {petri_net.initial_marking}")
     print(f"Pre-matrix shape: {petri_net.pre_matrix.shape}")
     print(f"Post-matrix shape: {petri_net.post_matrix.shape}")
+    print(f"Weight: {petri_net.c.tolist()}")
 
     # =====================================================================
     # TASK 2: EXPLICIT TRAVERSE
