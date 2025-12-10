@@ -89,17 +89,18 @@ Nhiệm vụ này tập trung vào việc thiết lập môi trường, đọc d
 
 Class này chịu trách nhiệm phân tích file cấu trúc PNML, mô hình hóa mạng Petri dưới dạng ma trận 🔢 và thực hiện tính toán các trạng thái khả đạt (*reachable markings*) bằng phương pháp duyệt đồ thị tường minh 🗺️ (**Explicit State Space Exploration**).
 
-#### 🧩 `__init__(self, pnml_file_path)`
+#### 🧩 `__init__(self, pnml_file_path, weight_file_path)`
 
 **Chức năng:**
 
 * 🏗️ Khởi tạo đối tượng mạng Petri.
 * 🗑️ Thiết lập các cấu trúc dữ liệu rỗng (`Places`, `Transitions`, `Ma trận liên thuộc`).
-* 🔄 Tự động gọi phương thức `read_pnml_file` để nạp dữ liệu từ đường dẫn được cung cấp.
+* 🔄 Tự động gọi phương thức `read_pnml_file` và `read_weight` để nạp dữ liệu từ đường dẫn được cung cấp.
 
 **Tham số:**
 
 * `pnml_file_path`: Đường dẫn đến file `.pnml` chứa cấu trúc mạng Petri.
+* `weight_file_path`: Đường dẫn file đến file `.txt` chứa trọng số của các Places cho việc hiện thực Task 5.
 
 #### 📄 `read_pnml_file(self, file_path: str)`
 
@@ -126,17 +127,20 @@ Phân tích cú pháp file XML (định dạng PNML) để xây dựng mô hình
 
 * 📥 Đọc file text chứa các số nguyên (cách nhau bởi khoảng trắng hoặc xuống dòng).
 * 🔢 Chuyển đổi dữ liệu thành mảng NumPy (`self.c`).
-* ✅ Kiểm tra tính hợp lệ: Số lượng trọng số trong file phải khớp với số lượng Place trong mạng (`self.num_places`).
+* ✅ Nếu số lượng trọng số không khớp với số lượng Place trong mạng (`self.num_places`) thì thêm padding hoặc loại bỏ phần thừa.
 
 **Tham số:**
 
 * `weight_file_path`: Đường dẫn đến file chứa trọng số.
 
 ---
-
 ### 🚀 Task 2: Tính toán Không gian Trạng thái (State Space Computation)
 
 Nhiệm vụ này thực hiện các thuật toán cốt lõi để khám phá, tính toán và hiển thị không gian trạng thái của mạng.
+
+### Class `ExplicitTraverse`
+
+Class này thực hiện việc duyệt PetriNet theo 2 chiến lược duyệt là Breadth-First Search và Depth-First Search và in ra không gian trạng trạng thái của PetriNet.
 
 #### 🧠 `explicit_reachable_markings_computation(self, method="bfs")`
 
