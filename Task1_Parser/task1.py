@@ -2,7 +2,7 @@ import xml.etree.ElementTree as et
 import numpy as np
 
 class PetriNet:
-    def __init__(self, pnml_file_path, weight_file_path):
+    def __init__(self, pnml_file_path, weight_file_path=None):
         self.places = []                # List of Place IDs(string)
         self.transitions = []           # List of Transition IDs(string)
         self.initial_marking = None     # Initial marking vector (NumPy array)
