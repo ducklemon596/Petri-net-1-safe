@@ -67,6 +67,7 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 * Các file p01.pnml, p02.pnml, p03.pnml là các mạng Petri 1-safe parallel mà nhóm đã sử dụng. Lần lượt từ p01 đến p03, kích thước mạng tăng dần.
 * Các file tr01.pnml, tr02.pnml, tr03.pnml là các mạng Petri 1-safe token ring mà nhóm đã sử dụng. Lần lượt từ tr01 đến tr03, kích thước mạng tăng dần.
 * File unstructured.pnml là mạng Petri 1-safe không có cấu trúc cụ thể mà nhóm đã sử dụng.
+* Ngoài ra còn nhiều file khác mà nhóm đã thu thập được trong quá trình thực hiện assignment này.
 
 ## File Trọng Số Mẫu
 
