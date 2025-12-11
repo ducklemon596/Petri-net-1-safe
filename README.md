@@ -49,7 +49,7 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
    ```powershell
    pip install -r requirements.txt
-   winget install graphviz
+   winget install graphviz (windows) hoặc brew install graphviz (macOS)
    ```
 
 2. **Chạy chương trình kiểm thử chính:**
@@ -61,10 +61,22 @@ main.py                # Chương trình tổng hợp kiểm thử cho tất c�
 
    Lệnh này sẽ phân tích file PNML ví dụ, chạy tất cả các tác vụ phân tích và in kết quả ra console. Ngoài ra, có thư mục logs/ để lưu các output cho dễ theo dõi. Thư mục bdd_visualizations/ sẽ chứa các file hình ảnh minh họa cấu trúc BDD.
 
+## Các File PNML Test
+
+* Các file PNML mẫu được đặt trong thư mục `Test_PNML_Files/`.
+* Các file p01.pnml, p02.pnml, p03.pnml là các mạng Petri 1-safe parallel mà nhóm đã sử dụng. Lần lượt từ p01 đến p03, kích thước mạng tăng dần.
+* Các file tr01.pnml, tr02.pnml, tr03.pnml là các mạng Petri 1-safe token ring mà nhóm đã sử dụng. Lần lượt từ tr01 đến tr03, kích thước mạng tăng dần.
+* File unstructured.pnml là mạng Petri 1-safe không có cấu trúc cụ thể mà nhóm đã sử dụng.
+
+## File Trọng Số Mẫu
+
+* File `weights.txt` trong thư mục gốc chứa trọng số mẫu cho các place trong mạng Petri. Mỗi số nguyên trong file tương ứng với trọng số của một place, theo thứ tự xuất hiện trong file PNML.
+* Bạn có thể chỉnh sửa file này hoặc tạo file mới với định dạng tương tự để sử dụng trong Task 5.
+
 ## Thêm File PNML Mới
 
 * Đặt các file `.pnml` của bạn vào thư mục `Test_PNML_Files/`.
-* Chạy python main.py <your_pnml_file> để phân tích file của bạn.
+* Chạy python main.py <your_pnml_file> để chạy với file của bạn.
 
 ## Yêu Cầu
 

@@ -32,14 +32,12 @@ class PetriNet:
                 print(f"[Error] PNML file has invalid XML structure: {e}")
                 return
 
-            # Locate the <net> node
             net = root.find(".//{*}net")
             if net is None:
                 raise ValueError("PNML file does not contain a <net> element.")
 
             M0 = []
 
-            # Extract places
             for place in net.iter():
                 if 'place' in place.tag:
                     pid = place.attrib.get("id") 
@@ -47,7 +45,6 @@ class PetriNet:
 
                     self.places.append(pid)
 
-                    # Read initial marking
                     marking = 0
                     for child in place:
                         if 'initialMarking' in child.tag:
@@ -59,14 +56,12 @@ class PetriNet:
                         raise ValueError("Invalid initial marking")
                     M0.append(marking)
 
-            # Extract transitions
             for trans in net.iter():
                 if 'transition' in trans.tag:
                     tid = trans.attrib.get("id")
                     if not tid: continue
                     self.transitions.append(tid)
 
-            # Build indexes
             self.num_places = len(self.places)
             self.num_transitions = len(self.transitions)
             self.place_to_index = {p: i for i, p in enumerate(self.places)}
@@ -79,20 +74,17 @@ class PetriNet:
             if self.num_places == 0:
                     raise ValueError("No Places found in the file.")
             
-            # Parse arcs        
             for arc in net.iter():
                 if 'arc' in arc.tag:
                     source = arc.attrib.get("source")
                     target = arc.attrib.get("target")
 
                     if source in self.place_to_index and target in self.transition_to_index:
-                        # Place -> Transition (Pre-matrix)
                         p_idx = self.place_to_index[source]
                         t_idx = self.transition_to_index[target]
                         self.pre_matrix[p_idx, t_idx] = 1
 
                     elif source in self.transition_to_index and target in self.place_to_index:
-                        # Transition -> Place (Post-matrix)
                         t_idx = self.transition_to_index[source]
                         p_idx = self.place_to_index[target]
                         self.post_matrix[p_idx, t_idx] = 1
@@ -106,23 +98,18 @@ class PetriNet:
     def read_weight(self, weight_file_path):
         try:
             with open(weight_file_path, 'r') as f:
-                # Read all content and split based on whitespace/newlines
                 content = f.read().split()
                 
-                # Convert list of strings to list of integers
                 weights = [int(x) for x in content]
 
             target_len = self.num_places
 
-            # Handle cases of missing or excess data
             if len(weights) < target_len:
-                # If missing: Add 1s to fill the gap
                 missing_count = target_len - len(weights)
                 weights.extend([1] * missing_count)
                 print(f"Weight data missing {missing_count} elements. Automatically padded with 1.")
 
             elif len(weights) > target_len:
-                # If excess: Truncate to the exact required length
                 weights = weights[:target_len]
 
             self.c = np.array(weights)

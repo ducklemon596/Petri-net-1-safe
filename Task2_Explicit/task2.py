@@ -21,26 +21,21 @@ class ExplicitTraverse:
             marking_states = [self.petri_net.initial_marking]
 
             while dq:
-                # Check timeout
                 if time.time() - start_time > timeout:
                     return -1, time.time() - start_time
 
-                # Select dequeue method based on traversal type
                 if method.lower() == "bfs":
-                    m = dq.popleft()  # BFS: FIFO
+                    m = dq.popleft()
                 else:
-                    m = dq.pop()  # DFS: LIFO
+                    m = dq.pop()
 
-                # Find all enabled transitions: M >= Pre(:, t)
                 enabled_t = [
                     t
                     for t in range(self.petri_net.num_transitions)
                     if np.all(m >= self.petri_net.pre_matrix[:, t])
                 ]
 
-                # Fire each enabled transition
                 for t in enabled_t:
-                    # Calculate new marking: M_new = M - Pre + Post
                     m_new = (
                         m
                         - self.petri_net.pre_matrix[:, t]
@@ -48,7 +43,6 @@ class ExplicitTraverse:
                     )
                     m_new_tuple = tuple(m_new)
 
-                    # If marking not visited, add to queue
                     if m_new_tuple not in visited:
                         visited.add(m_new_tuple)
                         dq.append(m_new)
@@ -72,12 +66,10 @@ class ExplicitTraverse:
         print(f"Execution time: {elapsed_time:.6f} seconds")
         print("-" * 40)
 
-        # Print reachable markings in the same format as Task3 (dict of place->token)
         print("Reachable marking states:")
         print("-" * 40)
 
         for state in states:
-            # state is a numpy array; convert to dict {place_id: token}
             marking = {
                 self.petri_net.places[i]: int(state[i])
                 for i in range(self.petri_net.num_places)
