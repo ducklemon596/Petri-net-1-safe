@@ -2,6 +2,8 @@
 
 Dự án này cung cấp một module để phân tích các mạng Petri 1-safe bằng nhiều kỹ thuật khác nhau. Toàn bộ được chia thành nhiều tác vụ, mỗi tác vụ được triển khai trong một module riêng nhằm đảm bảo rõ ràng và dễ mở rộng.
 
+Github Repository: [https://github.com/ducklemon596/Petri-net-1-safe](https://github.com/ducklemon596/Petri-net-1-safe)
+
 ## Cấu Trúc Dự Án
 
 ```
